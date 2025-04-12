@@ -1,4 +1,4 @@
-package com.rmit.sudokusolver.algorithms;
+package com.rmit.sudokusolver.algorithms.backtracking;
 
 import com.rmit.sudokusolver.algorithms.RMIT_Sudoku_Solver;
 

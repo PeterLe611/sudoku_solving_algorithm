@@ -1,7 +1,8 @@
 package com.rmit.sudokusolver;
 
 import com.rmit.sudokusolver.algorithms.RMIT_Sudoku_Solver;
-import com.rmit.sudokusolver.algorithms.BacktrackingSolver;
+import com.rmit.sudokusolver.algorithms.backtracking.BacktrackingSolver;
+import com.rmit.sudokusolver.algorithms.bitmasking_backtracking.BitmaskBacktrackingSolver;
 import com.rmit.sudokusolver.models.SudokuBoard;
 
 public class Main {
@@ -45,12 +46,22 @@ public class Main {
     };
 
     public static void main(String[] args) {
-        solvePuzzle(EASY_PUZZLE, "Easy");
-        solvePuzzle(MEDIUM_PUZZLE, "Medium");
-        solvePuzzle(HARD_PUZZLE, "Hard");
+        // Solve with standard backtracking
+        System.out.println("\n\n===== STANDARD BACKTRACKING SOLVER =====\n");
+        solveWithSolver(new BacktrackingSolver(), "Standard Backtracking");
+
+        System.out.println("\n\n===== BITMASK BACKTRACKING SOLVER =====\n");
+        solveWithSolver(new BitmaskBacktrackingSolver(), "Bitmask Backtracking");
     }
 
-    private static void solvePuzzle(int[][] puzzle, String difficulty) {
+    private static void solveWithSolver(RMIT_Sudoku_Solver solver, String solverName) {
+        System.out.println("\n=== " + solverName + " ===");
+        solvePuzzle(EASY_PUZZLE, "Easy", solver);
+        solvePuzzle(MEDIUM_PUZZLE, "Medium", solver);
+        solvePuzzle(HARD_PUZZLE, "Hard", solver);
+    }
+
+    private static void solvePuzzle(int[][] puzzle, String difficulty, RMIT_Sudoku_Solver solver) {
         System.out.println("\n=== " + difficulty + " Puzzle ===");
 
         SudokuBoard board = new SudokuBoard();
@@ -59,15 +70,13 @@ public class Main {
         System.out.println("\nOriginal puzzle:");
         board.print();
 
-        RMIT_Sudoku_Solver solver = new BacktrackingSolver();
-
         // Capture start time
         long startTime = System.currentTimeMillis();
         System.out.println("\nStart Time: " + new java.util.Date(startTime));
 
         boolean solved = solver.solve(board.getGrid());
 
-        // Capture end time
+        // Capture end timexx
         long endTime = System.currentTimeMillis();
         System.out.println("End Time: " + new java.util.Date(endTime));
 
