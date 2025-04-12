@@ -46,16 +46,16 @@ public class Main {
     };
 
     public static void main(String[] args) {
-        solvePuzzle(EASY_PUZZLE, "Easy");
-        solvePuzzle(MEDIUM_PUZZLE, "Medium");
-        solvePuzzle(HARD_PUZZLE, "Hard");
+        solvePuzzle(EASY_PUZZLE, "Easy",new BacktrackingSolver(), "Backtracking");
+        solvePuzzle(MEDIUM_PUZZLE, "Medium",new BacktrackingSolver(), "Backtracking");
+        solvePuzzle(HARD_PUZZLE, "Hard",new BacktrackingSolver(), "Backtracking");
 
-        solvePuzzleAC3(EASY_PUZZLE, "Easy");
-        solvePuzzleAC3(MEDIUM_PUZZLE, "Medium");
-        solvePuzzleAC3(HARD_PUZZLE, "Hard");
+        solvePuzzle(EASY_PUZZLE, "Easy", new SudokuSolverAC3(), "AC3");
+        solvePuzzle(MEDIUM_PUZZLE, "Medium", new SudokuSolverAC3(), "AC3");
+        solvePuzzle(HARD_PUZZLE, "Hard", new SudokuSolverAC3(), "AC3");
     }
 
-    private static void solvePuzzleAC3(int[][] puzzle, String difficulty) {
+    private static void solvePuzzle(int[][] puzzle, String difficulty, RMIT_Sudoku_Solver solver, String solverName) {
         System.out.println("\n=== " + difficulty + " Puzzle ===");
 
         SudokuBoard board = new SudokuBoard();
@@ -64,7 +64,7 @@ public class Main {
         System.out.println("\nOriginal puzzle:");
         board.print();
 
-        SudokuSolverAC3 solver = new SudokuSolverAC3();
+
 
         // Capture start time
         long startTime = System.currentTimeMillis();
@@ -90,38 +90,5 @@ public class Main {
         System.out.println("\n" + "=".repeat(40));
     }
 
-    private static void solvePuzzle(int[][] puzzle, String difficulty) {
-        System.out.println("\n=== " + difficulty + " Puzzle ===");
 
-        SudokuBoard board = new SudokuBoard();
-        board.setGrid(puzzle);
-
-        System.out.println("\nOriginal puzzle:");
-        board.print();
-
-        RMIT_Sudoku_Solver solver = new BacktrackingSolver();
-
-        // Capture start time
-        long startTime = System.currentTimeMillis();
-        System.out.println("\nStart Time: " + new java.util.Date(startTime));
-
-        boolean solved = solver.solve(board.getGrid());
-
-        // Capture end time
-        long endTime = System.currentTimeMillis();
-        System.out.println("End Time: " + new java.util.Date(endTime));
-
-        // Calculate duration
-        long duration = endTime - startTime;
-        System.out.println("Time Executed: " + duration + " milliseconds");
-
-        System.out.println("\nSolved puzzle:");
-        if (solved) {
-            board.print();
-        } else {
-            System.out.println("Could not solve this puzzle.");
-        }
-
-        System.out.println("\n" + "=".repeat(40));
-    }
 }

@@ -1,8 +1,10 @@
 package com.rmit.sudokusolver.algorithms.AC3;
 
+import com.rmit.sudokusolver.algorithms.RMIT_Sudoku_Solver;
+
 import java.util.*;
 
-public class SudokuSolverAC3 {
+public class SudokuSolverAC3 implements RMIT_Sudoku_Solver {
     static final int SIZE = 9;
 
     public static void main(String[] args) {
@@ -31,6 +33,11 @@ public class SudokuSolverAC3 {
         Map<String, Set<Integer>> domains = initializeDomains(board);
         if (!ac3(domains)) return false;
         return backtrack(board, domains);
+    }
+
+    @Override
+    public String getApproachName() {
+        return "AC3 +  Backtrack";
     }
 
     // Initialize domains for all cells
