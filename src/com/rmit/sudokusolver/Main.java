@@ -1,5 +1,6 @@
 package com.rmit.sudokusolver;
 
+import com.rmit.sudokusolver.algorithms.AC3.SudokuSolverAC3;
 import com.rmit.sudokusolver.algorithms.RMIT_Sudoku_Solver;
 import com.rmit.sudokusolver.algorithms.BacktrackingSolver;
 import com.rmit.sudokusolver.models.SudokuBoard;
@@ -48,6 +49,45 @@ public class Main {
         solvePuzzle(EASY_PUZZLE, "Easy");
         solvePuzzle(MEDIUM_PUZZLE, "Medium");
         solvePuzzle(HARD_PUZZLE, "Hard");
+
+        solvePuzzleAC3(EASY_PUZZLE, "Easy");
+        solvePuzzleAC3(MEDIUM_PUZZLE, "Medium");
+        solvePuzzleAC3(HARD_PUZZLE, "Hard");
+    }
+
+    private static void solvePuzzleAC3(int[][] puzzle, String difficulty) {
+        System.out.println("\n=== " + difficulty + " Puzzle ===");
+
+        SudokuBoard board = new SudokuBoard();
+        board.setGrid(puzzle);
+
+        System.out.println("\nOriginal puzzle:");
+        board.print();
+
+        SudokuSolverAC3 solver = new SudokuSolverAC3();
+
+        // Capture start time
+        long startTime = System.currentTimeMillis();
+        System.out.println("\nStart Time: " + new java.util.Date(startTime));
+
+        boolean solved = solver.solve(board.getGrid());
+
+        // Capture end time
+        long endTime = System.currentTimeMillis();
+        System.out.println("End Time: " + new java.util.Date(endTime));
+
+        // Calculate duration
+        long duration = endTime - startTime;
+        System.out.println("Time Executed: " + duration + " milliseconds");
+
+        System.out.println("\nSolved puzzle:");
+        if (solved) {
+            board.print();
+        } else {
+            System.out.println("Could not solve this puzzle.");
+        }
+
+        System.out.println("\n" + "=".repeat(40));
     }
 
     private static void solvePuzzle(int[][] puzzle, String difficulty) {
