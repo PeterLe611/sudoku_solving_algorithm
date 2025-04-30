@@ -2,7 +2,7 @@ package com.rmit.sudokusolver;
 
 import com.rmit.sudokusolver.algorithms.RMIT_Sudoku_Solver;
 import com.rmit.sudokusolver.algorithms.backtracking.BacktrackingSolver;
-import com.rmit.sudokusolver.algorithms.bitmasking_backtracking.BitmaskBacktrackingSolver;
+import com.rmit.sudokusolver.algorithms.bitmasking_backtracking.Bitmask_BacktrackingSolver;
 import com.rmit.sudokusolver.models.SudokuBoard;
 
 public class Main {
@@ -51,7 +51,7 @@ public class Main {
         solveWithSolver(new BacktrackingSolver(), "Standard Backtracking");
 
         System.out.println("\n\n===== BITMASK BACKTRACKING SOLVER =====\n");
-        solveWithSolver(new BitmaskBacktrackingSolver(), "Bitmask Backtracking");
+        solveWithSolver(new Bitmask_BacktrackingSolver(), "Bitmask Backtracking");
     }
 
     private static void solveWithSolver(RMIT_Sudoku_Solver solver, String solverName) {
