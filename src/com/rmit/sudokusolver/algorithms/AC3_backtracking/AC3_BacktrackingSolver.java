@@ -1,10 +1,10 @@
-package com.rmit.sudokusolver.algorithms.AC3;
+package com.rmit.sudokusolver.algorithms.AC3_backtracking;
 
 import com.rmit.sudokusolver.algorithms.RMIT_Sudoku_Solver;
 
 import java.util.*;
 
-public class SudokuSolverAC3 implements RMIT_Sudoku_Solver {
+public class AC3_BacktrackingSolver implements RMIT_Sudoku_Solver {
     static final int SIZE = 9;
 
     public static void main(String[] args) {
@@ -20,7 +20,7 @@ public class SudokuSolverAC3 implements RMIT_Sudoku_Solver {
                 {7, 0, 3, 0, 1, 8, 0, 0, 0}
         };
 
-        SudokuSolverAC3 solver = new SudokuSolverAC3();
+        AC3_BacktrackingSolver solver = new AC3_BacktrackingSolver();
         if (solver.solve(board)) {
             solver.printBoard(board);
         } else {

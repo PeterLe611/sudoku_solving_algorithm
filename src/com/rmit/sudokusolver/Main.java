@@ -1,8 +1,8 @@
 package com.rmit.sudokusolver;
 
-import com.rmit.sudokusolver.algorithms.AC3.SudokuSolverAC3;
+import com.rmit.sudokusolver.algorithms.AC3_backtracking.AC3_BacktrackingSolver;
 import com.rmit.sudokusolver.algorithms.RMIT_Sudoku_Solver;
-import com.rmit.sudokusolver.algorithms.BacktrackingSolver;
+import com.rmit.sudokusolver.algorithms.backtracking.BacktrackingSolver;
 import com.rmit.sudokusolver.models.SudokuBoard;
 
 public class Main {
@@ -50,9 +50,9 @@ public class Main {
         solvePuzzle(MEDIUM_PUZZLE, "Medium",new BacktrackingSolver(), "Backtracking");
         solvePuzzle(HARD_PUZZLE, "Hard",new BacktrackingSolver(), "Backtracking");
 
-        solvePuzzle(EASY_PUZZLE, "Easy", new SudokuSolverAC3(), "AC3");
-        solvePuzzle(MEDIUM_PUZZLE, "Medium", new SudokuSolverAC3(), "AC3");
-        solvePuzzle(HARD_PUZZLE, "Hard", new SudokuSolverAC3(), "AC3");
+        solvePuzzle(EASY_PUZZLE, "Easy", new AC3_BacktrackingSolver(), "AC3");
+        solvePuzzle(MEDIUM_PUZZLE, "Medium", new AC3_BacktrackingSolver(), "AC3");
+        solvePuzzle(HARD_PUZZLE, "Hard", new AC3_BacktrackingSolver(), "AC3");
     }
 
     private static void solvePuzzle(int[][] puzzle, String difficulty, RMIT_Sudoku_Solver solver, String solverName) {
