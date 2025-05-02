@@ -10,8 +10,8 @@ import java.util.List;
 
         // DLX Node structure
         private static class Node {
-            Node left, right, up, down;// 4 directional node
-            ColumnHeader header; // "root" of the linked list
+            Node left, right, up, down;
+            ColumnHeader header;
 
             Node() {
                 this.left = this.right = this.up = this.down = this;
@@ -29,11 +29,11 @@ import java.util.List;
         }
 
         private ColumnHeader header;
-        private List<Node> solution; // possible solution
-        private int[][] solutionBoard; // the board that have added all the solution node
+        private List<Node> solution;
+        private int[][] solutionBoard;
 
         public DancingLinks() {
-            header = createDLXMatrix(); // create the Exact Cover Problem
+            header = createDLXMatrix();
             solution = new ArrayList<>();
         }
 
@@ -43,10 +43,10 @@ import java.util.List;
             ColumnHeader prev = root;
 
             // 4 types of constraints: cell, row, column, box
-            for (int i = 0; i < SIZE * SIZE * 4; i++) { // first 81 columns: cell constrain
-                ColumnHeader col = new ColumnHeader(i); // first 81 columns: column constrain
-                col.left = prev;                        // first 81 columns: row constrain
-                prev.right = col;                       // first 81 columns: box constrain
+            for (int i = 0; i < SIZE * SIZE * 4; i++) {
+                ColumnHeader col = new ColumnHeader(i);
+                col.left = prev;
+                prev.right = col;
                 prev = col;
             }
             prev.right = root;
