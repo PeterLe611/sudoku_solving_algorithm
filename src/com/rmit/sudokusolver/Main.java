@@ -1,5 +1,6 @@
 package com.rmit.sudokusolver;
 
+import com.rmit.sudokusolver.algorithms.AC3_backtracking.AC3_BacktrackingSolver;
 import com.rmit.sudokusolver.algorithms.RMIT_Sudoku_Solver;
 import com.rmit.sudokusolver.algorithms.backtracking.BacktrackingSolver;
 import com.rmit.sudokusolver.algorithms.bitmasking_backtracking.BitmaskBacktrackingSolver;
@@ -19,6 +20,9 @@ public class Main {
 
         System.out.println("\n\n===== BITMASK BACKTRACKING SOLVER =====\n");
         solveWithSolver(new BitmaskBacktrackingSolver(), "Bitmask Backtracking", easyPath, mediumPath, hardPath);
+
+        System.out.println("\n\n===== AC3 BACKTRACKING SOLVER =====\n");
+        solveWithSolver(new AC3_BacktrackingSolver(), "Bitmask Backtracking", easyPath, mediumPath, hardPath);
     }
 
     private static void solveWithSolver(RMIT_Sudoku_Solver solver, String solverName, String easy, String medium, String hard) throws IOException {
