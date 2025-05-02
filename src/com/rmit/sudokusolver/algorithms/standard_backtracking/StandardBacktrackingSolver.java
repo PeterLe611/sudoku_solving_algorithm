@@ -1,8 +1,8 @@
-package com.rmit.sudokusolver.algorithms.backtracking;
+package com.rmit.sudokusolver.algorithms.standard_backtracking;
 
 import com.rmit.sudokusolver.algorithms.RMIT_Sudoku_Solver;
 
-public class BacktrackingSolver implements RMIT_Sudoku_Solver {
+public class StandardBacktrackingSolver implements RMIT_Sudoku_Solver {
     private static final int SIZE = 9;
     private static final int EMPTY = 0;
 

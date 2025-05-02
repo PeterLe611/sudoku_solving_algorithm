@@ -2,8 +2,8 @@ package com.rmit.sudokusolver;
 
 import com.rmit.sudokusolver.algorithms.AC3_backtracking.AC3_BacktrackingSolver;
 import com.rmit.sudokusolver.algorithms.RMIT_Sudoku_Solver;
-import com.rmit.sudokusolver.algorithms.backtracking.BacktrackingSolver;
 import com.rmit.sudokusolver.algorithms.bitmasking_backtracking.BitmaskBacktrackingSolver;
+import com.rmit.sudokusolver.algorithms.standard_backtracking.StandardBacktrackingSolver;
 import com.rmit.sudokusolver.models.SudokuBoard;
 import com.rmit.sudokusolver.utils.PuzzleLoader;
 
@@ -16,7 +16,7 @@ public class Main {
         String hardPath = "src/resources/puzzles/hard.txt";
 
         System.out.println("\n\n===== STANDARD BACKTRACKING SOLVER =====\n");
-        solveWithSolver(new BacktrackingSolver(), "Standard Backtracking", easyPath, mediumPath, hardPath);
+        solveWithSolver(new StandardBacktrackingSolver(), "Standard Backtracking", easyPath, mediumPath, hardPath);
 
         System.out.println("\n\n===== BITMASK BACKTRACKING SOLVER =====\n");
         solveWithSolver(new BitmaskBacktrackingSolver(), "Bitmask Backtracking", easyPath, mediumPath, hardPath);
