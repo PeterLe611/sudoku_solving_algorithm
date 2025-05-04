@@ -1,6 +1,4 @@
-package org.rmit_SudokuSolver.Algorithms.AC3_Backtracking;
-
-import org.rmit_SudokuSolver.Algorithms.RMIT_Sudoku_Solver;
+package org.rmit_SudokuSolver.Algorithms;
 
 import java.util.*;
 

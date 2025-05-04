@@ -1,4 +1,4 @@
-package org.rmit_SudokuSolver.Algorithms.DancingLinks_Backtracking;
+package org.rmit_SudokuSolver.Algorithms;
 
 import java.util.ArrayList;
 import java.util.List;

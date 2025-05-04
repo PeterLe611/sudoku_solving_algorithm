@@ -2,7 +2,7 @@ package org.rmit_SudokuSolver.Algorithms;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.rmit_SudokuSolver.Algorithms.Backtracking.BacktrackingSolver;
+
 import org.rmit_SudokuSolver.Utils.PuzzleLoader;
 import java.io.IOException;
 

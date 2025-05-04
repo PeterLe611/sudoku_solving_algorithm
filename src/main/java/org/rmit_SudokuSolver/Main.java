@@ -1,8 +1,8 @@
 package org.rmit_SudokuSolver;
 
-import org.rmit_SudokuSolver.Algorithms.AC3_Backtracking.AC3_BacktrackingSolver;
-import org.rmit_SudokuSolver.Algorithms.Backtracking.BacktrackingSolver;
-import org.rmit_SudokuSolver.Algorithms.Bitmasking_Backtracking.Bitmasking_BacktrackingSolver;
+import org.rmit_SudokuSolver.Algorithms.AC3_BacktrackingSolver;
+import org.rmit_SudokuSolver.Algorithms.BacktrackingSolver;
+import org.rmit_SudokuSolver.Algorithms.Bitmasking_BacktrackingSolver;
 import org.rmit_SudokuSolver.Algorithms.RMIT_Sudoku_Solver;
 import org.rmit_SudokuSolver.Models.SudokuBoard;
 import org.rmit_SudokuSolver.Utils.PuzzleLoader;
