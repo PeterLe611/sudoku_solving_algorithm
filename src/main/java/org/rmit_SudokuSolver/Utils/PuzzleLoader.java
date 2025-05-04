@@ -19,6 +19,10 @@ public class PuzzleLoader {
                 }
                 row++;
             }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("File not found, " + e.getMessage());
+            System.exit(1);
         }
 
         return board;

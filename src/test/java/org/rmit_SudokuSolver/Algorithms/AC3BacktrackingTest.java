@@ -2,13 +2,13 @@ package org.rmit_SudokuSolver.Algorithms;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.rmit_SudokuSolver.Algorithms.Backtracking.BacktrackingSolver;
+import org.rmit_SudokuSolver.Algorithms.AC3_Backtracking.AC3_BacktrackingSolver;
 import org.rmit_SudokuSolver.Utils.PuzzleLoader;
 import java.io.IOException;
 
-public class BacktrackingTest {
+public class AC3BacktrackingTest {
 
-    BacktrackingSolver solver = new BacktrackingSolver();
+    AC3_BacktrackingSolver solver = new AC3_BacktrackingSolver();
 
     @Test
     public void testEasyPuzzle() throws IOException {
