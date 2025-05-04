@@ -1,7 +1,8 @@
-package com.rmit.sudokusolver.algorithms.bitmasking_backtracking;
-import com.rmit.sudokusolver.algorithms.RMIT_Sudoku_Solver;
+package org.rmit_SudokuSolver.Algorithms.Bitmasking_Backtracking;
 
-public class Bitmask_BacktrackingSolver implements RMIT_Sudoku_Solver {
+import org.rmit_SudokuSolver.Algorithms.RMIT_Sudoku_Solver;
+
+public class Bitmasking_BacktrackingSolver implements RMIT_Sudoku_Solver {
     private int[] rows = new int[9];
     private int[] cols = new int[9];
     private int[][] boxes = new int[3][3];
