@@ -2,6 +2,7 @@ package org.rmit_SudokuSolver;
 
 import org.rmit_SudokuSolver.Algorithms.AC3_Backtracking.AC3_BacktrackingSolver;
 import org.rmit_SudokuSolver.Algorithms.Backtracking.BacktrackingSolver;
+import org.rmit_SudokuSolver.Algorithms.Bitmasking_Backtracking.Bitmasking_BacktrackingSolver;
 import org.rmit_SudokuSolver.Algorithms.RMIT_Sudoku_Solver;
 import org.rmit_SudokuSolver.Models.SudokuBoard;
 import org.rmit_SudokuSolver.Utils.PuzzleLoader;
@@ -18,7 +19,7 @@ public class Main {
         solveWithSolver(new BacktrackingSolver(), "Standard Backtracking", easyPath, mediumPath, hardPath);
 
         System.out.println("\n\n===== BITMASK BACKTRACKING SOLVER =====\n");
-//        solveWithSolver(new BitmaskBacktrackingSolver(), "Bitmask Backtracking", easyPath, mediumPath, hardPath);
+        solveWithSolver(new Bitmasking_BacktrackingSolver(), "Bitmask Backtracking", easyPath, mediumPath, hardPath);
 
         System.out.println("\n\n===== AC3 BACKTRACKING SOLVER =====\n");
         solveWithSolver(new AC3_BacktrackingSolver(), "Bitmask Backtracking", easyPath, mediumPath, hardPath);
