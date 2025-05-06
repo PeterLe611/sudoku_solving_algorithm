@@ -31,7 +31,8 @@ public class DancingLinks_BacktrackingSolver implements RMIT_Sudoku_Solver {
 
     private ColumnHeader header;
     private List<Node> solution;
-    private int[][] solutionBoard;
+    public int[][] solutionBoard;
+
 
     public DancingLinks_BacktrackingSolver() {
         header = createDLXMatrix();
@@ -59,7 +60,13 @@ public class DancingLinks_BacktrackingSolver implements RMIT_Sudoku_Solver {
     public boolean solve(int[][] board) {
         solutionBoard = new int[SIZE][SIZE];
         addSudokuConstraints(board);
-        return search(0);
+        boolean solved = search(0);
+        if (solved) {
+            // Copy solutionBoard into input board
+            for (int i = 0; i < SIZE; i++) {
+                System.arraycopy(solutionBoard[i], 0, board[i], 0, SIZE);
+            }        }
+        return solved;
     }
 
     @Override
@@ -254,7 +261,7 @@ public class DancingLinks_BacktrackingSolver implements RMIT_Sudoku_Solver {
         System.out.println("------------------------------------------");
         DancingLinks_BacktrackingSolver solver = new DancingLinks_BacktrackingSolver();
         if (solver.solve(puzzle)) {
-            int[][] solution = solver.getSolution();
+            int[][] solution = solver.solutionBoard;
             printBoard(solution);
         } else {
             System.out.println("No solution exists");
