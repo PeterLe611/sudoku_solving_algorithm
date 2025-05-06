@@ -132,24 +132,24 @@ import java.util.List;
             cover(col);
 
             for (Node row = col.down; row != col; row = row.down) {
-                solution.add(row);
+                solution.add(row);//add the solution to a List of nodes
 
                 for (Node node = row.right; node != row; node = node.right) {
-                    cover(node.header);
+                    cover(node.header);//cover that column (remove that column out of the matrix)
                 }
 
                 if (search(depth + 1)) {
                     return true;
                 }
 
-                solution.remove(solution.size() - 1);
+                solution.remove(solution.size() - 1);// if cant find a solution for a particular cells => backtracking
 
                 for (Node node = row.left; node != row; node = node.left) {
-                    uncover(node.header);
+                    uncover(node.header);//adding the node that has been removed back to the matrix for backtrack
                 }
             }
 
-            uncover(col);
+            uncover(col);//adding the column that has been removed back to the matrix for backtrack
             return false;
         }
 
