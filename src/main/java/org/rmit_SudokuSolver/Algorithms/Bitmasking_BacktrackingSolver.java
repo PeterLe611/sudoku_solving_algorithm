@@ -12,7 +12,7 @@ public class Bitmasking_BacktrackingSolver implements RMIT_Sudoku_Solver {
 
     @Override
     public String getApproachName() {
-        return "Bitmask Backtracking Algorithm";
+        return "Bitmasking";
     }
 
     private boolean backtrack(int[][] board, int row, int col) {
@@ -45,6 +45,18 @@ public class Bitmasking_BacktrackingSolver implements RMIT_Sudoku_Solver {
     }
 
     private void initBits(int[][] board) {
+        // Clear previous state
+        for (int i = 0; i < 9; i++) {
+            rows[i] = 0;
+            cols[i] = 0;
+        }
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                boxes[i][j] = 0;
+            }
+        }
+
+        // Now set bits based on the current board
         for (int r = 0; r < 9; r++) {
             for (int c = 0; c < 9; c++) {
                 if (board[r][c] != 0) {
@@ -52,9 +64,10 @@ public class Bitmasking_BacktrackingSolver implements RMIT_Sudoku_Solver {
                     int mask = 1 << num;
                     rows[r] |= mask;
                     cols[c] |= mask;
-                    boxes[r/3][c/3] |= mask;
+                    boxes[r / 3][c / 3] |= mask;
                 }
             }
         }
     }
+
 }

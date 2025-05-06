@@ -31,7 +31,7 @@ public class BacktrackingSolver implements RMIT_Sudoku_Solver {
 
     @Override
     public String getApproachName() {
-        return "Backtrack Algorithm";
+        return "Backtracking";
     }
 
     private boolean isValid(int[][] board, int row, int col, int num) {

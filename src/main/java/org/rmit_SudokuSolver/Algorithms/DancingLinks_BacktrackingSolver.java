@@ -3,7 +3,7 @@ package org.rmit_SudokuSolver.Algorithms;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DancingLinks_BacktrackingSolver {
+public class DancingLinks_BacktrackingSolver implements RMIT_Sudoku_Solver {
 
     private static final int SIZE = 9;
     private static final int BOX_SIZE = 3;
@@ -61,6 +61,9 @@ public class DancingLinks_BacktrackingSolver {
         addSudokuConstraints(board);
         return search(0);
     }
+
+    @Override
+    public String getApproachName() { return "Dancing_Links"; }
 
     private void addSudokuConstraints(int[][] board) {
         // For each cell, row, column, and possible number

@@ -35,7 +35,7 @@ public class AC3_BacktrackingSolver implements RMIT_Sudoku_Solver {
 
     @Override
     public String getApproachName() {
-        return "AC3 +  Backtrack";
+        return "AC3_Backtracking";
     }
 
     // Initialize domains for all cells

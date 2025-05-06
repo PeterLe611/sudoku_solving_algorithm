@@ -1,42 +1,50 @@
 package org.rmit_SudokuSolver.Algorithms;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.rmit_SudokuSolver.Utils.PuzzleLoader.deepCopy;
 
+import org.rmit_SudokuSolver.Models.ArrayList;
+import org.rmit_SudokuSolver.Models.SudokuBoard;
+import org.rmit_SudokuSolver.Utils.PerformanceTester;
 import org.rmit_SudokuSolver.Utils.PuzzleLoader;
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
+
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class BitmaskingBacktrackingTest {
 
-    BacktrackingSolver solver = new BacktrackingSolver();
+    RMIT_Sudoku_Solver solver = new Bitmasking_BacktrackingSolver();
 
     @Test
-    public void testEasyPuzzle() throws IOException {
-        int[][] board = PuzzleLoader.loadFromFile("src/main/resources/easy.txt");
-        long start = System.nanoTime();
-        boolean solved = solver.solve(board);
-        long end = System.nanoTime();
-        assertTrue(solved);
-        System.out.println("Backtracking (Easy): " + (end - start) / 1_000_000 + " ms");
+    public void test1_EasyPuzzle() throws IOException, ExecutionException, InterruptedException, TimeoutException {
+        ArrayList<int[][]> puzzles = PuzzleLoader.loadAllFromDirectory("src/main/resources" +
+                "/easy");
+        for(int i = 0; i < puzzles.size(); i++){
+            PerformanceTester.evaluate("Easy", puzzles.get(i), solver); // Deep
+            // copy the puzzle before solving so that the puzzle is a fresh puzzle without
+            // any modifications
+        }
     }
 
     @Test
-    public void testMediumPuzzle() throws IOException {
-        int[][] board = PuzzleLoader.loadFromFile("src/main/resources/medium.txt");
-        long start = System.nanoTime();
-        boolean solved = solver.solve(board);
-        long end = System.nanoTime();
-        assertTrue(solved);
-        System.out.println("Backtracking (Medium): " + (end - start) / 1_000_000 + " ms");
+    public void test2_MediumPuzzle() throws IOException {
+        ArrayList<int[][]> puzzles = PuzzleLoader.loadAllFromDirectory("src/main/resources" +
+                "/medium");
+        for(int i = 0; i < puzzles.size(); i++){
+            PerformanceTester.evaluate("Medium", deepCopy(puzzles.get(i)), solver);
+        }
     }
 
     @Test
-    public void testHardPuzzle() throws IOException {
-        int[][] board = PuzzleLoader.loadFromFile("src/main/resources/hard.txt");
-        long start = System.nanoTime();
-        boolean solved = solver.solve(board);
-        long end = System.nanoTime();
-        assertTrue(solved);
-        System.out.println("Backtracking (Hard): " + (end - start) / 1_000_000 + " ms");
+    public void test3_HardPuzzle() throws IOException {
+        ArrayList<int[][]> puzzles = PuzzleLoader.loadAllFromDirectory("src/main/resources" +
+                "/hard");
+        for(int i = 0; i < puzzles.size(); i++){
+            PerformanceTester.evaluate("Hard", deepCopy(puzzles.get(i)), solver);
+        }
     }
 }

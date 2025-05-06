@@ -1,53 +1,56 @@
 package org.rmit_SudokuSolver;
 
-import org.rmit_SudokuSolver.Algorithms.AC3_BacktrackingSolver;
-import org.rmit_SudokuSolver.Algorithms.BacktrackingSolver;
-import org.rmit_SudokuSolver.Algorithms.Bitmasking_BacktrackingSolver;
-import org.rmit_SudokuSolver.Algorithms.RMIT_Sudoku_Solver;
+import org.rmit_SudokuSolver.Algorithms.*;
 import org.rmit_SudokuSolver.Models.SudokuBoard;
 import org.rmit_SudokuSolver.Utils.PuzzleLoader;
 
 import java.io.IOException;
+import java.util.concurrent.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        String easyPath = "src/resources/puzzles/easy.txt";
-        String mediumPath = "src/resources/puzzles/medium.txt";
-        String hardPath = "src/resources/puzzles/hard.txt";
+    public static void main(String[] args) throws IOException, ExecutionException, InterruptedException, TimeoutException {
+        String easyPath = "src/main/resources/easy/easy2.txt";
+//        String mediumPath = "src/resources/puzzles/medium1.txt";
+//        String hardPath = "src/resources/puzzles/hard1.txt";
 
-        System.out.println("\n\n===== STANDARD BACKTRACKING SOLVER =====\n");
-        solveWithSolver(new BacktrackingSolver(), "Standard Backtracking", easyPath, mediumPath, hardPath);
+//        System.out.println("\n\n===== STANDARD BACKTRACKING SOLVER =====\n");
+//        solveWithSolver(new BacktrackingSolver(), "Standard Backtracking", easyPath);
 
-        System.out.println("\n\n===== BITMASK BACKTRACKING SOLVER =====\n");
-        solveWithSolver(new Bitmasking_BacktrackingSolver(), "Bitmask Backtracking", easyPath, mediumPath, hardPath);
+        System.out.println("\n\n===== DANCING LINKS BACKTRACKING SOLVER =====\n");
+        solveWithSolver(new DancingLinks_BacktrackingSolver(), "DancingLinks Backtracking",
+                easyPath);
 
-        System.out.println("\n\n===== AC3 BACKTRACKING SOLVER =====\n");
-        solveWithSolver(new AC3_BacktrackingSolver(), "Bitmask Backtracking", easyPath, mediumPath, hardPath);
+//        System.out.println("\n\n===== AC3 BACKTRACKING SOLVER =====\n");
+//        solveWithSolver(new AC3_BacktrackingSolver(), "Bitmask Backtracking", easyPath);
     }
 
-    private static void solveWithSolver(RMIT_Sudoku_Solver solver, String solverName, String easy, String medium, String hard) throws IOException {
+    private static void solveWithSolver(RMIT_Sudoku_Solver solver, String solverName,
+                                        String path) throws IOException, ExecutionException, InterruptedException, TimeoutException {
         System.out.println("\n=== " + solverName + " ===");
-        String easyFilePath = "src/main/resources/easy.txt", mediumFilePath = "src/main/resources/medium.txt", hardFilePath = "src/main/resources/hard.txt";
-        solvePuzzle(easyFilePath, "Easy", solver);
-        solvePuzzle(mediumFilePath, "Medium", solver);
-        solvePuzzle(hardFilePath, "Hard", solver);
+        solvePuzzle(path, "Easy", solver);
+//        solvePuzzle(mediumFilePath, "Medium", solver);
+//        solvePuzzle(hardFilePath, "Hard", solver);
     }
 
-    private static void solvePuzzle(String filePath, String difficulty, RMIT_Sudoku_Solver solver) throws IOException {
+    private static void solvePuzzle(String filePath, String difficulty, RMIT_Sudoku_Solver solver) throws IOException, ExecutionException, InterruptedException, TimeoutException {
         System.out.println("\n=== " + difficulty + " Puzzle ===");
 
         int[][] puzzle = PuzzleLoader.loadFromFile(filePath);
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Future<Boolean> future = executor.submit(
+                () -> solver.solve(puzzle)); // Assign task to the thread
 
         SudokuBoard board = new SudokuBoard();
         board.setGrid(puzzle);
+        boolean solved = future.get(120, TimeUnit.SECONDS);  // 2-minute timeout
+        System.out.println(solved);
+        future.cancel(true);
 
         System.out.println("\nOriginal puzzle:");
         board.print();
 
         long startTime = System.currentTimeMillis();
         System.out.println("\nStart Time: " + new java.util.Date(startTime));
-
-        boolean solved = solver.solve(board.getGrid());
 
         long endTime = System.currentTimeMillis();
         System.out.println("End Time: " + new java.util.Date(endTime));
