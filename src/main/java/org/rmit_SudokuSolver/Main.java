@@ -20,6 +20,7 @@ public class Main {
         solveWithSolver(new DancingLinks_BacktrackingSolver(), "DancingLinks Backtracking",
                 easyPath);
 
+
 //        System.out.println("\n\n===== AC3 BACKTRACKING SOLVER =====\n");
 //        solveWithSolver(new AC3_BacktrackingSolver(), "Bitmask Backtracking", easyPath);
     }
@@ -27,6 +28,7 @@ public class Main {
     private static void solveWithSolver(RMIT_Sudoku_Solver solver, String solverName,
                                         String path) throws IOException, ExecutionException, InterruptedException, TimeoutException {
         System.out.println("\n=== " + solverName + " ===");
+
         solvePuzzle(path, "Easy", solver);
 //        solvePuzzle(mediumFilePath, "Medium", solver);
 //        solvePuzzle(hardFilePath, "Hard", solver);
@@ -34,20 +36,18 @@ public class Main {
 
     private static void solvePuzzle(String filePath, String difficulty, RMIT_Sudoku_Solver solver) throws IOException, ExecutionException, InterruptedException, TimeoutException {
         System.out.println("\n=== " + difficulty + " Puzzle ===");
-
         int[][] puzzle = PuzzleLoader.loadFromFile(filePath);
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        Future<Boolean> future = executor.submit(
-                () -> solver.solve(puzzle)); // Assign task to the thread
 
         SudokuBoard board = new SudokuBoard();
         board.setGrid(puzzle);
-        boolean solved = future.get(120, TimeUnit.SECONDS);  // 2-minute timeout
-        System.out.println(solved);
-        future.cancel(true);
-
-        System.out.println("\nOriginal puzzle:");
+        System.out.println("Original puzzle: ");
         board.print();
+
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Future<Boolean> future = executor.submit(
+                () -> solver.solve(puzzle)); // Assign task to the thread
+        boolean solved = future.get(120, TimeUnit.SECONDS);
+        future.cancel(true);
 
         long startTime = System.currentTimeMillis();
         System.out.println("\nStart Time: " + new java.util.Date(startTime));
