@@ -59,6 +59,8 @@ public class DancingLinks_BacktrackingSolver implements RMIT_Sudoku_Solver {
 
     public boolean solve(int[][] board) {
         solutionBoard = new int[SIZE][SIZE];
+        solution = new ArrayList<>();
+        header = createDLXMatrix(); // <-- Recreate header every time
         addSudokuConstraints(board);
         boolean solved = search(0);
         if (solved) {
