@@ -4,18 +4,12 @@ public class SudokuBoard {
     private int[][] grid = new int[9][9];
 
     // Constructor
-    public SudokuBoard() {
-        // Initialize empty board
-    }
+    public SudokuBoard() {}
 
     // Getters and setters
-    public int[][] getGrid() {
-        return grid;
-    }
+    public int[][] getGrid() { return grid; }
 
-    public void setGrid(int[][] grid) {
-        this.grid = grid;
-    }
+    public void setGrid(int[][] grid) { this.grid = grid; }
 
     // Print method
     public void print() {

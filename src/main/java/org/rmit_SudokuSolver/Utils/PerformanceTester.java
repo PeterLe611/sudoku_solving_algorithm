@@ -1,8 +1,6 @@
 package org.rmit_SudokuSolver.Utils;
 
 import org.rmit_SudokuSolver.Algorithms.RMIT_Sudoku_Solver;
-import org.rmit_SudokuSolver.Models.SudokuBoard;
-
 import java.util.concurrent.*;
 
 // This class's role is suggested in its name, to test each function as well as calculating important metrics
@@ -10,19 +8,6 @@ public class PerformanceTester {
     static final int NUM_RUNS = 3; // the number of times an algorithm will be run for each
     // test
     // cases, for example: easy1.txt will run 5 times, the same with every other puzzle
-
-    private static boolean isValidInput(int[][] board) {
-        if (board == null || board.length != 9) return false;
-        for (int i = 0; i < 9; i++) {
-            if (board[i] == null || board[i].length != 9) return false;
-            for (int j = 0; j < 9; j++) {
-                int val = board[i][j];
-                if (val < 0 || val > 9) return false;
-            }
-        }
-
-        return true;
-    }
 
     private static void printSideBySideBoards(int[][] initial, int[][] solved) {
         System.out.println("Initial Puzzle\t\t\tSolved Puzzle");
@@ -41,14 +26,6 @@ public class PerformanceTester {
 
     public static void evaluate(String difficulty,int[][] board, RMIT_Sudoku_Solver solver) {
         for (int i = 1; i <= NUM_RUNS; i++) {
-            if (!isValidInput(
-                    board)) { // Quick puzzle input validation test before actually solving
-                System.out.println(
-                        "Invalid puzzle input for difficulty: " + difficulty + " - The board is either not a 9x9 Grid board, or " +
-                                "initial values violate a Sudoku board constraint.");
-                return;
-            }
-
             // Save initial board state
             int[][] initialBoard = new int[9][9];
             for (int r = 0; r < 9; r++) {

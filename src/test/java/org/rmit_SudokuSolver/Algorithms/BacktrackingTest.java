@@ -7,8 +7,6 @@ import org.rmit_SudokuSolver.Models.ArrayList;
 import org.rmit_SudokuSolver.Utils.PerformanceTester;
 import org.rmit_SudokuSolver.Utils.PuzzleLoader;
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeoutException;
 
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
@@ -19,7 +17,17 @@ public class BacktrackingTest {
     RMIT_Sudoku_Solver solver = new BacktrackingSolver();
 
     @Test
-    public void test1_EasyPuzzle() throws IOException, ExecutionException, InterruptedException, TimeoutException {
+    public void test0_InvalidPuzzle() throws IOException {
+        ArrayList<int[][]> puzzles = PuzzleLoader.loadAllFromDirectory("src/main/resources" +
+                "/edge_cases");
+        for(int i = 0; i < puzzles.size(); i++){
+            PerformanceTester.evaluate("Testing edge cases", deepCopy(puzzles.get(i)),
+                    solver);
+        }
+    }
+
+    @Test
+    public void test1_EasyPuzzle() throws IOException {
         ArrayList<int[][]> puzzles = PuzzleLoader.loadAllFromDirectory("src/main/resources" +
                 "/easy");
         for(int i = 0; i < puzzles.size(); i++){
@@ -28,7 +36,7 @@ public class BacktrackingTest {
     }
 
     @Test
-    public void test2_MediumPuzzle() throws IOException, ExecutionException, InterruptedException, TimeoutException {
+    public void test2_MediumPuzzle() throws IOException {
         ArrayList<int[][]> puzzles = PuzzleLoader.loadAllFromDirectory("src/main/resources" +
                 "/medium");
         for(int i = 0; i < puzzles.size(); i++){
@@ -37,7 +45,7 @@ public class BacktrackingTest {
     }
 
     @Test
-    public void test3_HardPuzzle() throws IOException, ExecutionException, InterruptedException, TimeoutException {
+    public void test3_HardPuzzle() throws IOException {
         ArrayList<int[][]> puzzles = PuzzleLoader.loadAllFromDirectory("src/main/resources" +
                 "/hard");
         for(int i = 0; i < puzzles.size(); i++){

@@ -20,7 +20,17 @@ public class BitmaskingBacktrackingTest {
     RMIT_Sudoku_Solver solver = new Bitmasking_BacktrackingSolver();
 
     @Test
-    public void test1_EasyPuzzle() throws IOException, ExecutionException, InterruptedException, TimeoutException {
+    public void test0_InvalidPuzzle() throws IOException {
+        ArrayList<int[][]> puzzles = PuzzleLoader.loadAllFromDirectory("src/main/resources" +
+                "/edge_cases");
+        for(int i = 0; i < puzzles.size(); i++){
+            PerformanceTester.evaluate("Testing edge cases", deepCopy(puzzles.get(i)),
+                    solver);
+        }
+    }
+
+    @Test
+    public void test1_EasyPuzzle() throws IOException {
         ArrayList<int[][]> puzzles = PuzzleLoader.loadAllFromDirectory("src/main/resources" +
                 "/easy");
         for(int i = 0; i < puzzles.size(); i++){
