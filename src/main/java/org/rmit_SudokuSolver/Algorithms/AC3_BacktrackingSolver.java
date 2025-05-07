@@ -4,6 +4,7 @@ import java.util.*;
 
 public class AC3_BacktrackingSolver implements RMIT_Sudoku_Solver {
     static final int SIZE = 9;
+    private int stepCount = 0;  // Counter for steps
 
     public static void main(String[] args) {
         int[][] board = {
@@ -24,6 +25,7 @@ public class AC3_BacktrackingSolver implements RMIT_Sudoku_Solver {
         } else {
             System.out.println("No solution found.");
         }
+        System.out.println("Steps taken: " + solver.getStepCount());  // Output the step count
     }
 
     // Entry point: apply AC3 then backtracking
@@ -34,9 +36,11 @@ public class AC3_BacktrackingSolver implements RMIT_Sudoku_Solver {
     }
 
     @Override
-    public String getApproachName() {
-        return "AC3";
-    }
+    public String getApproachName() { return "AC3"; }
+
+    @Override
+    // Get the total step count
+    public int getStepCount() { return stepCount; }
 
     // Initialize domains for all cells
     private Map<String, Set<Integer>> initializeDomains(int[][] board) {
@@ -88,6 +92,7 @@ public class AC3_BacktrackingSolver implements RMIT_Sudoku_Solver {
         while (!queue.isEmpty()) {
             String[] arc = queue.poll();
             if (revise(domains, arc[0], arc[1])) {
+                stepCount++;  // Increment for each arc processed
                 if (domains.get(arc[0]).isEmpty()) return false;
                 for (String xk : getNeighbors(arc[0])) {
                     if (!xk.equals(arc[1])) {

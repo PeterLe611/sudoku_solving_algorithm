@@ -9,6 +9,8 @@ public class DancingLinks_BacktrackingSolver implements RMIT_Sudoku_Solver {
     private static final int BOX_SIZE = 3;
     private static final int EMPTY = 0;
 
+    private int stepCount = 0; // Step count to track the number of operations
+
     // DLX Node structure
     private static class Node {
         Node left, right, up, down;
@@ -32,7 +34,6 @@ public class DancingLinks_BacktrackingSolver implements RMIT_Sudoku_Solver {
     private ColumnHeader header;
     private List<Node> solution;
     public int[][] solutionBoard;
-
 
     public DancingLinks_BacktrackingSolver() {
         header = createDLXMatrix();
@@ -61,18 +62,22 @@ public class DancingLinks_BacktrackingSolver implements RMIT_Sudoku_Solver {
         solutionBoard = new int[SIZE][SIZE];
         solution = new ArrayList<>();
         header = createDLXMatrix(); // <-- Recreate header every time
+        stepCount = 0; // Reset step count
         addSudokuConstraints(board);
         boolean solved = search(0);
         if (solved) {
-            // Copy solutionBoard into input board
             for (int i = 0; i < SIZE; i++) {
                 System.arraycopy(solutionBoard[i], 0, board[i], 0, SIZE);
-            }        }
+            }
+        }
         return solved;
     }
 
     @Override
     public String getApproachName() { return "Dancing_Links"; }
+
+    @Override
+    public int getStepCount() { return stepCount; } // Return the step count
 
     private void addSudokuConstraints(int[][] board) {
         // For each cell, row, column, and possible number
@@ -177,6 +182,8 @@ public class DancingLinks_BacktrackingSolver implements RMIT_Sudoku_Solver {
                 node.header.size--;
             }
         }
+
+        stepCount++; // Increment the step count each time a column is covered
     }
 
     private void uncover(ColumnHeader col) {
@@ -190,6 +197,8 @@ public class DancingLinks_BacktrackingSolver implements RMIT_Sudoku_Solver {
 
         col.right.left = col;
         col.left.right = col;
+
+        stepCount++; // Increment the step count each time a column is uncovered
     }
 
     private ColumnHeader selectColumn() {
@@ -203,6 +212,7 @@ public class DancingLinks_BacktrackingSolver implements RMIT_Sudoku_Solver {
             }
         }
 
+        stepCount++; // Increment the step count each time a column is selected
         return selected;
     }
 
@@ -239,10 +249,6 @@ public class DancingLinks_BacktrackingSolver implements RMIT_Sudoku_Solver {
 
             solutionBoard[row][col] = num;
         }
-    }
-
-    public int[][] getSolution() {
-        return solutionBoard;
     }
 
     public static void main(String[] args) {
@@ -285,4 +291,3 @@ public class DancingLinks_BacktrackingSolver implements RMIT_Sudoku_Solver {
         }
     }
 }
-

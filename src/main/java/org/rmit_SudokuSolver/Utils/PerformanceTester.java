@@ -24,6 +24,21 @@ public class PerformanceTester {
         return true;
     }
 
+    private static void printSideBySideBoards(int[][] initial, int[][] solved) {
+        System.out.println("Initial Puzzle\t\t\tSolved Puzzle");
+        for (int i = 0; i < 9; i++) {
+            StringBuilder row = new StringBuilder();
+            for (int j = 0; j < 9; j++) {
+                row.append(initial[i][j] == 0 ? ". " : initial[i][j] + " ");
+            }
+            row.append("\t\t");
+            for (int j = 0; j < 9; j++) {
+                row.append(solved[i][j] + " ");
+            }
+            System.out.println(row);
+        }
+    }
+
     public static void evaluate(String difficulty,int[][] board, RMIT_Sudoku_Solver solver) {
         for (int i = 1; i <= NUM_RUNS; i++) {
             if (!isValidInput(
@@ -34,6 +49,18 @@ public class PerformanceTester {
                 return;
             }
 
+            // Save initial board state
+            int[][] initialBoard = new int[9][9];
+            for (int r = 0; r < 9; r++) {
+                System.arraycopy(board[r], 0, initialBoard[r], 0, 9);
+            }
+
+            // Create a fresh copy of the board for solving
+            int[][] clonedBoard = new int[9][9];
+            for (int r = 0; r < 9; r++) {
+                System.arraycopy(board[r], 0, clonedBoard[r], 0, 9);
+            }
+
             // Perform garbage collection to reduce noise in memory measurement
             System.gc();
 
@@ -41,7 +68,7 @@ public class PerformanceTester {
             ExecutorService executor = Executors.newSingleThreadExecutor();
 
             // Submit the solver task to the executor
-            Future<Boolean> future = executor.submit(() -> solver.solve(board));
+            Future<Boolean> future = executor.submit(() -> solver.solve(clonedBoard));
 
             boolean solved = false;
             double durationMs = 0;
@@ -77,18 +104,16 @@ public class PerformanceTester {
 
             // Log result if solver failed (either due to timeout or logic failure)
             if (!solved) {
-                System.out.println("Failed to solve: " + difficulty);
+                System.out.println("Failed to solve puzzle for algorithm: " + solver.getApproachName() + ", the board cannot be solved!");
             }
 
-            System.out.println("Solved puzzle: ");
-            SudokuBoard solvedPuzzle = new SudokuBoard();
-            solvedPuzzle.setGrid(board);
-            solvedPuzzle.print();
+            printSideBySideBoards(initialBoard, clonedBoard); // Print the two boards side by side
 
             // Print final evaluation report
             System.out.println("Difficulty: " + difficulty);
             System.out.printf("Time: %.3f ms\n", durationMs);
             System.out.printf("Memory: %.3f KB\n", memoryUsedKB);
+            System.out.printf("Steps taken: %d\n", solver.getStepCount());
             System.out.println();
 
             PerformanceLogger.log(difficulty, solver.getApproachName(), durationMs,

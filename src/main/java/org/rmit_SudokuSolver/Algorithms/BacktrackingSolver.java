@@ -1,25 +1,31 @@
 package org.rmit_SudokuSolver.Algorithms;
 
-
 public class BacktrackingSolver implements RMIT_Sudoku_Solver {
     private static final int SIZE = 9;
     private static final int EMPTY = 0;
 
+    private int stepCount = 0; // Step counter
+
     @Override
     public boolean solve(int[][] board) {
+        stepCount = 0; // Reset step count at start
+        return backtrack(board);
+    }
+
+    private boolean backtrack(int[][] board) {
         for (int row = 0; row < SIZE; row++) {
             for (int col = 0; col < SIZE; col++) {
                 if (board[row][col] == EMPTY) {
                     for (int num = 1; num <= SIZE; num++) {
                         if (isValid(board, row, col, num)) {
                             board[row][col] = num;
+                            stepCount++; // Count every assignment
 
-                            if (solve(board)) {
+                            if (backtrack(board)) {
                                 return true;
                             }
 
-                            // Backtrack
-                            board[row][col] = EMPTY;
+                            board[row][col] = EMPTY; // Backtrack
                         }
                     }
                     return false; // Trigger backtracking
@@ -32,6 +38,11 @@ public class BacktrackingSolver implements RMIT_Sudoku_Solver {
     @Override
     public String getApproachName() {
         return "Backtracking";
+    }
+
+    @Override
+    public int getStepCount() {
+        return stepCount;
     }
 
     private boolean isValid(int[][] board, int row, int col, int num) {
