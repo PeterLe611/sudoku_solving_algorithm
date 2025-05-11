@@ -10,28 +10,30 @@ import java.util.concurrent.*;
 public class Main {
     public static void main(String[] args) throws IOException, ExecutionException, InterruptedException, TimeoutException {
         String easyPath = "src/main/resources/easy/easy2.txt";
-//        String mediumPath = "src/resources/puzzles/medium1.txt";
-//        String hardPath = "src/resources/puzzles/hard1.txt";
+        String mediumPath = "src/resources/puzzles/medium1.txt";
+        String hardPath = "src/resources/puzzles/hard1.txt";
 
-//        System.out.println("\n\n===== STANDARD BACKTRACKING SOLVER =====\n");
-//        solveWithSolver(new BacktrackingSolver(), "Standard Backtracking", easyPath);
+        System.out.println("\n\n===== STANDARD BACKTRACKING SOLVER =====\n");
+        solveWithSolver(new BacktrackingSolver(), "Standard Backtracking", easyPath,
+                mediumPath, hardPath);
 
         System.out.println("\n\n===== DANCING LINKS BACKTRACKING SOLVER =====\n");
         solveWithSolver(new DancingLinks_BacktrackingSolver(), "DancingLinks Backtracking",
-                easyPath);
+                easyPath, mediumPath, hardPath);
 
-
-//        System.out.println("\n\n===== AC3 BACKTRACKING SOLVER =====\n");
-//        solveWithSolver(new AC3_BacktrackingSolver(), "Bitmask Backtracking", easyPath);
+        System.out.println("\n\n===== AC3 BACKTRACKING SOLVER =====\n");
+        solveWithSolver(new AC3_BacktrackingSolver(), "Bitmask Backtracking", easyPath,
+                mediumPath, hardPath);
     }
 
     private static void solveWithSolver(RMIT_Sudoku_Solver solver, String solverName,
-                                        String path) throws IOException, ExecutionException, InterruptedException, TimeoutException {
+                                        String easyPath, String mediumPath, String hardPath) throws IOException, ExecutionException,
+            InterruptedException, TimeoutException {
         System.out.println("\n=== " + solverName + " ===");
 
-        solvePuzzle(path, "Easy", solver);
-//        solvePuzzle(mediumFilePath, "Medium", solver);
-//        solvePuzzle(hardFilePath, "Hard", solver);
+        solvePuzzle(easyPath, "Easy", solver);
+        solvePuzzle(mediumPath, "Medium", solver);
+        solvePuzzle(hardPath, "Hard", solver);
     }
 
     private static void solvePuzzle(String filePath, String difficulty, RMIT_Sudoku_Solver solver) throws IOException, ExecutionException, InterruptedException, TimeoutException {

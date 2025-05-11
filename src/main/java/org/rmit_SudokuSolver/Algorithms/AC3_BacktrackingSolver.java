@@ -211,3 +211,220 @@ public class AC3_BacktrackingSolver implements RMIT_Sudoku_Solver {
         }
     }
 }
+
+// Re-implementation without using deepCopy
+//package org.rmit_SudokuSolver.Algorithms;
+//
+//import java.util.*;
+//
+//public class AC3_BacktrackingSolver implements RMIT_Sudoku_Solver {
+//    static final int SIZE = 9;
+//    private int stepCount = 0;
+//
+//    public static void main(String[] args) {
+//        int[][] board = {
+//                {0, 0, 0, 2, 6, 0, 7, 0, 1},
+//                {6, 8, 0, 0, 7, 0, 0, 9, 0},
+//                {1, 9, 0, 0, 0, 4, 5, 0, 0},
+//                {8, 2, 0, 1, 0, 0, 0, 4, 0},
+//                {0, 0, 4, 6, 0, 2, 9, 0, 0},
+//                {0, 5, 0, 0, 0, 3, 0, 2, 8},
+//                {0, 0, 9, 3, 0, 0, 0, 7, 4},
+//                {0, 4, 0, 0, 5, 0, 0, 3, 6},
+//                {7, 0, 3, 0, 1, 8, 0, 0, 0}
+//        };
+//
+//        AC3_BacktrackingSolver solver = new AC3_BacktrackingSolver();
+//        if (solver.solve(board)) {
+//            solver.printBoard(board);
+//        } else {
+//            System.out.println("No solution found.");
+//        }
+//        System.out.println("Steps taken: " + solver.getStepCount());
+//    }
+//
+//    public boolean solve(int[][] board) {
+//        Map<String, Set<Integer>> domains = initializeDomains(board);
+//        if (!ac3(domains)) return false;
+//        return backtrack(board, domains);
+//    }
+//
+//    @Override
+//    public String getApproachName() { return "AC3"; }
+//
+//    @Override
+//    public int getStepCount() { return stepCount; }
+//
+//    private Map<String, Set<Integer>> initializeDomains(int[][] board) {
+//        Map<String, Set<Integer>> domains = new HashMap<>();
+//        for (int row = 0; row < SIZE; row++) {
+//            for (int col = 0; col < SIZE; col++) {
+//                String key = row + "," + col;
+//                if (board[row][col] == 0) {
+//                    domains.put(key, getPossibleValues(board, row, col));
+//                } else {
+//                    domains.put(key, new HashSet<>(Collections.singletonList(board[row][col])));
+//                }
+//            }
+//        }
+//        return domains;
+//    }
+//
+//    private Set<Integer> getPossibleValues(int[][] board, int row, int col) {
+//        Set<Integer> possible = new HashSet<>();
+//        for (int i = 1; i <= 9; i++) possible.add(i);
+//
+//        for (int i = 0; i < SIZE; i++) {
+//            possible.remove(board[row][i]);
+//            possible.remove(board[i][col]);
+//        }
+//
+//        int rStart = row / 3 * 3, cStart = col / 3 * 3;
+//        for (int r = rStart; r < rStart + 3; r++)
+//            for (int c = cStart; c < cStart + 3; c++)
+//                possible.remove(board[r][c]);
+//
+//        return possible;
+//    }
+//
+//    private boolean ac3(Map<String, Set<Integer>> domains) {
+//        Queue<String[]> queue = new LinkedList<>();
+//
+//        for (int r = 0; r < SIZE; r++) {
+//            for (int c = 0; c < SIZE; c++) {
+//                String xi = r + "," + c;
+//                for (String xj : getNeighbors(r, c)) {
+//                    queue.add(new String[]{xi, xj});
+//                }
+//            }
+//        }
+//
+//        while (!queue.isEmpty()) {
+//            String[] arc = queue.poll();
+//            if (revise(domains, arc[0], arc[1])) {
+//                stepCount++;
+//                if (domains.get(arc[0]).isEmpty()) return false;
+//                for (String xk : getNeighbors(arc[0])) {
+//                    if (!xk.equals(arc[1])) {
+//                        queue.add(new String[]{xk, arc[0]});
+//                    }
+//                }
+//            }
+//        }
+//        return true;
+//    }
+//
+//    private boolean revise(Map<String, Set<Integer>> domains, String xi, String xj) {
+//        boolean revised = false;
+//        Set<Integer> toRemove = new HashSet<>();
+//        for (int x : domains.get(xi)) {
+//            boolean satisfied = false;
+//            for (int y : domains.get(xj)) {
+//                if (x != y) {
+//                    satisfied = true;
+//                    break;
+//                }
+//            }
+//            if (!satisfied) toRemove.add(x);
+//        }
+//
+//        if (!toRemove.isEmpty()) {
+//            domains.get(xi).removeAll(toRemove);
+//            revised = true;
+//        }
+//        return revised;
+//    }
+//
+//    private Set<String> getNeighbors(String key) {
+//        String[] parts = key.split(",");
+//        return getNeighbors(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+//    }
+//
+//    private Set<String> getNeighbors(int row, int col) {
+//        Set<String> neighbors = new HashSet<>();
+//        for (int i = 0; i < SIZE; i++) {
+//            if (i != col) neighbors.add(row + "," + i);
+//            if (i != row) neighbors.add(i + "," + col);
+//        }
+//
+//        int rStart = row / 3 * 3, cStart = col / 3 * 3;
+//        for (int r = rStart; r < rStart + 3; r++)
+//            for (int c = cStart; c < cStart + 3; c++)
+//                if (r != row || c != col)
+//                    neighbors.add(r + "," + c);
+//
+//        return neighbors;
+//    }
+//
+//    // 🚀 Trail-based backtracking
+//    private boolean backtrack(int[][] board, Map<String, Set<Integer>> domains) {
+//        String unassigned = null;
+//        int minSize = 10; // MRV: Minimum Remaining Values
+//        for (int r = 0; r < SIZE; r++) {
+//            for (int c = 0; c < SIZE; c++) {
+//                if (board[r][c] == 0) {
+//                    String key = r + "," + c;
+//                    int size = domains.get(key).size();
+//                    if (size < minSize) {
+//                        minSize = size;
+//                        unassigned = key;
+//                    }
+//                }
+//            }
+//        }
+//
+//        if (unassigned == null) return true;
+//
+//        String[] parts = unassigned.split(",");
+//        int row = Integer.parseInt(parts[0]), col = Integer.parseInt(parts[1]);
+//
+//        for (int val : new HashSet<>(domains.get(unassigned))) {
+//            if (isSafe(board, row, col, val)) {
+//                board[row][col] = val;
+//
+//                // Save state changes (trail)
+//                List<String> modifiedKeys = new ArrayList<>();
+//                Map<String, Set<Integer>> removed = new HashMap<>();
+//                for (String neighbor : getNeighbors(row, col)) {
+//                    if (domains.containsKey(neighbor) && domains.get(neighbor).contains(val)) {
+//                        domains.get(neighbor).remove(val);
+//                        removed.computeIfAbsent(neighbor, k -> new HashSet<>()).add(val);
+//                        modifiedKeys.add(neighbor);
+//                    }
+//                }
+//
+//                if (backtrack(board, domains)) return true;
+//
+//                // Undo domain changes
+//                for (String key : modifiedKeys) {
+//                    domains.get(key).addAll(removed.get(key));
+//                }
+//                board[row][col] = 0;
+//            }
+//        }
+//        return false;
+//    }
+//
+//    private boolean isSafe(int[][] board, int row, int col, int val) {
+//        for (int i = 0; i < SIZE; i++)
+//            if (board[row][i] == val || board[i][col] == val)
+//                return false;
+//
+//        int rStart = row / 3 * 3, cStart = col / 3 * 3;
+//        for (int r = rStart; r < rStart + 3; r++)
+//            for (int c = cStart; c < cStart + 3; c++)
+//                if (board[r][c] == val)
+//                    return false;
+//
+//        return true;
+//    }
+//
+//    private void printBoard(int[][] board) {
+//        for (int r = 0; r < SIZE; r++) {
+//            for (int c = 0; c < SIZE; c++) {
+//                System.out.print(board[r][c] + " ");
+//            }
+//            System.out.println();
+//        }
+//    }
+//}

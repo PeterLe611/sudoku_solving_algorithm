@@ -7,8 +7,9 @@ import java.io.IOException;
 public class PerformanceLogger {
     public static void log(String difficulty, String algorithm, double timeMs,
                            double memoryKB) {
-        try (FileWriter writer = new FileWriter("performance_results.csv", true)) {
-            writer.write(difficulty + "," + algorithm + "," + timeMs + "," + memoryKB + "\n");
+        try (FileWriter writer = new FileWriter("performance_results.csv", true)) { // Save
+            // to performance_results.csv for logging results and graphing values
+            writer.write(difficulty + "," + algorithm + "," + timeMs + "," + memoryKB + "\n"); // Saves every result in this format
         } catch (IOException e) {
             e.printStackTrace();
         }

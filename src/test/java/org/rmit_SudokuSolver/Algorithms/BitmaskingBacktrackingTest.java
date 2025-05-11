@@ -4,12 +4,9 @@ import org.junit.Test;
 import static org.rmit_SudokuSolver.Utils.PuzzleLoader.deepCopy;
 
 import org.rmit_SudokuSolver.Models.ArrayList;
-import org.rmit_SudokuSolver.Models.SudokuBoard;
 import org.rmit_SudokuSolver.Utils.PerformanceTester;
 import org.rmit_SudokuSolver.Utils.PuzzleLoader;
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeoutException;
 
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;

@@ -57,6 +57,7 @@ public class PuzzleLoader {
     public static int[][] loadFromFile(String filePath) throws IOException {
         int[][] board = new int[9][9];
 
+        // Get the boards from the edge_cases file path
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             int row = 0;
@@ -74,25 +75,23 @@ public class PuzzleLoader {
             System.exit(1);
         }
 
-        // Validate the loaded board
+        // Validate the loaded board before starting any algorithm
         BoardStatus status = validateBoard(board);
         if (status != BoardStatus.VALID) {
             System.out.println("Invalid puzzle in file: " + filePath);
             switch (status) {
-                case NULL_OR_WRONG_SIZE:
-                    System.out.println("Reason: Board is null or not a 9x9 grid.\n");
-                    break;
-                case INVALID_VALUE_RANGE:
+                case INVALID_VALUE_RANGE: // Invalid board with 'out of range' values
                     System.out.println("Reason: Board contains values outside the range " +
                             "[0–9].\n");
                     break;
-                case COMPLETELY_EMPTY:
+                case COMPLETELY_EMPTY: // Completely empty board => multiple results boards
+                    // like this should be handled carefully
                     System.out.println("Reason: Board is completely empty.\n");
                     break;
-                case FULLY_SOLVED:
+                case FULLY_SOLVED: // A fully solved board
                     System.out.println("Reason: Board is already fully solved.\n");
                     break;
-                default:
+                default: // Random unknown issue
                     System.out.println("Reason: Unknown issue.\n");
             }
             return null; // Return null to indicate invalid board
