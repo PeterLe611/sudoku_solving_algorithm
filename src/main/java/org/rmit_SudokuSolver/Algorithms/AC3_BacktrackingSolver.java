@@ -169,7 +169,7 @@ public class AC3_BacktrackingSolver implements RMIT_Sudoku_Solver {
                 Map<String, Set<Integer>> newDomains = deepCopy(domains);
                 newDomains.get(unassigned).clear();
                 newDomains.get(unassigned).add(val);
-                if (ac3(newDomains) && backtrack(board, newDomains)) return true;
+                if (backtrack(board, newDomains)) return true;
                 board[row][col] = 0;
             }
         }
