@@ -10,8 +10,8 @@ import java.util.concurrent.*;
 public class Main {
     public static void main(String[] args) throws IOException, ExecutionException, InterruptedException, TimeoutException {
         String easyPath = "src/main/resources/easy/easy2.txt";
-        String mediumPath = "src/resources/puzzles/medium1.txt";
-        String hardPath = "src/resources/puzzles/hard1.txt";
+        String mediumPath = "src/main/resources/medium/medium1.txt";
+        String hardPath = "src/main/resources/hard/hard1.txt";
 
         System.out.println("\n\n===== STANDARD BACKTRACKING SOLVER =====\n");
         solveWithSolver(new BacktrackingSolver(), "Standard Backtracking", easyPath,
